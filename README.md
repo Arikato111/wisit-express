@@ -16,7 +16,7 @@
 
 [Response](#response)
 
-[Cors](#cors)
+[Origin](#origin)
 
 ---
 ### Get started
@@ -32,7 +32,7 @@
 ### การ require เข้ามาใช้งาน
 - สำหรับการ `require` นั้น จะใช้คำสั่ง `require` ตามปกติ เพียงแต่ว่าต้องมีการสร้างตัวแปรมารับค่า เช่นโค้ดด้านล่าง
 	```
-	$express  =  require('modules/wisit-express/wisit-express.php');
+	$express  =  require('modules/wisit-express/main.m.php');
 	```
 	และตัวแปรนั้นก็จะมีค่าเป็น object ซึ่งสามารถเรียกใช้ method ต่างๆ ได้
 
@@ -96,8 +96,14 @@ $express->get('/', function ($req, $res) {
 	- `$res->status()` คือการส่งรหัสสถานะต่างๆ เช่น 404 , 200 ซึ่งจะใส่ตัวเลขรหัดลงใน function
 	- `$res->json()` คือการส่ง response ออกไปในรูปแบบ json โดยใส่ PHP Array หรือ PHP Associative Arrays ลงใน function
 ---
-### Cors
-
+### Origin
+- หากมีปัญหาเกี่ยวกับ cors สามารถใช้ `$express->origin()` เพื่ออนุญาต origin ในการเรียกใช้ api ได้ หรือหากต้องการระบุ origin เฉพาะก็สามารถทำได้โดยการใส่ origin ในรูปแบบ array เช่น 
+```
+$express->origin([
+	'http://yourorigin',
+]);
+```
+- แน่นอนว่าสามารถใส่ได้มากกว่าหนึ่ง
 ---
 
 ### ติดตั้ง

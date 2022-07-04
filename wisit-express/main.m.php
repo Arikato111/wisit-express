@@ -13,8 +13,11 @@ return new class
             error_reporting();
         }
     }
-   public function origin(array $url) {
-        if(isset($_SERVER['HTTP_ORIGIN'])) {
+   public function origin($url = '*') {
+        if($url == '*') {
+            header("Access-Control-Allow-Origin: *");
+            header("Access-Control-Allow-Headers: *");
+        } elseif(isset($_SERVER['HTTP_ORIGIN'])) {
             $http_origin = $_SERVER['HTTP_ORIGIN'];
             if(in_array($http_origin, $url)) {
                 header("Access-Control-Allow-Origin: $http_origin");
