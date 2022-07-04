@@ -1,5 +1,6 @@
 ## WISIT-EXPRESS ( API )
 ### นี่คือ module ที่จะมาช่วยในการเขียน API
+### 1.0 version
 ---
 ### what news!
 เพิ่ม origin ที่จะมาช่วยแก้ปัญหาการติด cors
