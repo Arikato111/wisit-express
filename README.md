@@ -116,7 +116,7 @@ $express->origin([
 -   วิธีที่ 1  **ติดตั้งผ่านคำสั่ง php**  , โดยคัดลอกโค้ดด้านล่างไปวางไว้ที่ installer.php แล้วเข้าหน้า installer.php ผ่านเบราว์เซอร์ รอสักครู่ เป็นอันเสร็จสิ้น
 ```
 <?php
-eval(file_get_contents('https://raw.githubusercontent.com/Arikato111/wisit-express/installer/installer.txt'));
+eval(file_get_contents('https://raw.githubusercontent.com/Arikato111/wisit-express/installer/Release1-0.txt'));
 ```
 
 - วิธีที่ 2 ติดตั้งผ่าน git ใช้คำสั่ง git clone เพื่อดาวน์โหลด template `git clone https://github.com/Arikato111/wisit-express.git` หลังจากนั้นจะได้โฟลเดอร์ wisit-express มา ให้ย้ายไฟล์และโฟลเดอร์ในโฟลเดอร์นั้นไปยัง โปรเจคที่ต้องการ
