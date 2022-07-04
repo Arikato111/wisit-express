@@ -16,6 +16,8 @@
 
 [Response](#response)
 
+[Cors](#cors)
+
 ---
 ### Get started
 - **นี่คือ** `module` เสริมที่จะมาช่วยในเรื่องของการเขียน api ให้เขียนได้สะดวกยิ่งขึ้น ซึ่งจะทำงานบนหน้า index.php เท่านั้น คล้ายกับการเขียนบน JavaScript 
@@ -93,6 +95,9 @@ $express->get('/', function ($req, $res) {
 	
 	- `$res->status()` คือการส่งรหัสสถานะต่างๆ เช่น 404 , 200 ซึ่งจะใส่ตัวเลขรหัดลงใน function
 	- `$res->json()` คือการส่ง response ออกไปในรูปแบบ json โดยใส่ PHP Array หรือ PHP Associative Arrays ลงใน function
+---
+### Cors
+
 ---
 
 ### ติดตั้ง
