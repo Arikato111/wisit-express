@@ -4,16 +4,15 @@
     * This source code is licensed under the MIT license found in the
     * LICENSE file in the root directory of this source tree.
 */
-return new class
-{
-    public function showError($show=true){
+$express = new class  {
+    public function showError(bool $show=true): void{
         if(!$show) {
             error_reporting(0);
         } else {
             error_reporting();
         }
     }
-   public function origin($url = ['*']) {
+   public function origin(array $url = ['*']):void {
         if($url[0] == '*') {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Headers: *");
@@ -26,7 +25,7 @@ return new class
         }
     }
     // check path url
-    public function getPath()
+    public function getPath():string
     {
         $path = "$_SERVER[REQUEST_URI]";
         $real_path = '/';
@@ -41,25 +40,25 @@ return new class
         return $real_path;
     }
     // Route to check METHOD type , Path, and return callback function
-    public function Route($method, $path, $callback)
+    public function Route(string $method,string $path,callable $callback): null | callable
     {
-        if ("$_SERVER[REQUEST_METHOD]" != $method) return; // check method
+        if ("$_SERVER[REQUEST_METHOD]" != $method) return null; // check method
 
         if ($path == '*') return $callback; // check path universel
         // convert to array
         $get_path = explode('/', $path);
         $get_route = explode('/', $this->getPath());
 
-        if (sizeof($get_path) != sizeof($get_route)) return; // check array size
+        if (sizeof($get_path) != sizeof($get_route)) return null; // check array size
         for ($i = 0; $i < sizeof($get_route); $i++) {
             // compare and check ':'
-            if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return;
+            if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return null;
         }
         return $callback;
     }
 
     // method [  GET ] to get user request
-    public function get($path, $callback)
+    public function get(string $path,callable $callback):void
     {
         $value = $this->Route('GET', $path, $callback);
         if ($value) {
@@ -68,7 +67,7 @@ return new class
         }
     }
     // method [  POST ] to get user request
-    public function post($path, $callback)
+    public function post(string $path,callable $callback):void
     {
         $value = $this->Route('POST', $path, $callback);
         if ($value) {
@@ -77,7 +76,7 @@ return new class
         }
     }
     // method [  PUT ] to get user request
-    public function put($path, $callback)
+    public function put(string $path,callable $callback): void
     {
         $value = $this->Route('PUT', $path, $callback);
         if ($value) {
@@ -86,7 +85,7 @@ return new class
         }
     }
     // method [  DELETE ] to get user request
-    public function delete($path, $callback)
+    public function delete(string $path,callable $callback): void
     {
         $value = $this->Route('DELETE', $path, $callback);
         if ($value) {
@@ -97,15 +96,15 @@ return new class
 
     // use for input to method function
     // response to return class obj to use function inside
-    public function request()
+    public function request(): object
     {  // to return class obj
         return new class
         {
-            function body()
+            function body(): string
             { // get value from body
                 return file_get_contents('php://input');
             }
-            function query()
+            function query(): array
             { // get value from url
                 $url = "$_SERVER[REQUEST_URI]";
                 $parts = parse_url($url);
@@ -113,7 +112,7 @@ return new class
                 parse_str($parts['query'], $output);
                 return $output;
             }
-            function params($position = -1)
+            function params(int $position = -1): string
             {
                 $path = "$_SERVER[REQUEST_URI]";
                 $real_path = '/';
@@ -136,19 +135,19 @@ return new class
     }
     // use for input to method function 
     // response to return class obj to use function inside
-    public function response()
+    public function response():object
     {
         return new class
         { // return obj
-            function send($value)
+            function send(string $value): void
             {
                 echo $value;
             }
-            function status($status)
+            function status(int $status): void
             {
                 http_response_code($status);
             }
-            function json($value)
+            function json(object | array $value): void
             {
                 echo json_encode($value);
             }
