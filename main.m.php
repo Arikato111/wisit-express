@@ -79,18 +79,18 @@ class Wexpress
         }
     }
     // method [  PUT ] to get user request
-    public function put(string $path, callable $callback): void
+    public static function put(string $path, callable $callback): void
     {
-        $value = $this->Route('PUT', $path, $callback);
+        $value = Wexpress::Route('PUT', $path, $callback);
         if ($value) {
             echo $value(Wexpress::request(), Wexpress::response());
             exit;
         }
     }
     // method [  DELETE ] to get user request
-    public function delete(string $path, callable $callback): void
+    public static function delete(string $path, callable $callback): void
     {
-        $value = $this->Route('DELETE', $path, $callback);
+        $value = Wexpress::Route('DELETE', $path, $callback);
         if ($value) {
             echo $value(Wexpress::request(), Wexpress::response());
             exit;
