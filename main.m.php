@@ -97,6 +97,17 @@ class Wexpress
         }
     }
 
+     // method [  ALL ] to get user request
+     public static function all(string $path, callable $callback): void
+     {
+         $value = Wexpress::Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
+         if ($value) {
+             echo $value(Wexpress::request(), Wexpress::response());
+             exit;
+         }
+     }
+ 
+
     // use for input to method function
     // response to return class obj to use function inside
     public static function request(): object
