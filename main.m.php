@@ -94,6 +94,15 @@ return new class
             exit;
         }
     }
+    // method [  ALL ] to get user request
+    public function all($path, $callback)
+    {
+        $value = $this->Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
+        if ($value) {
+            echo $value($this->request(), $this->response());
+            exit;
+        }
+    }
 
     // use for input to method function
     // response to return class obj to use function inside
