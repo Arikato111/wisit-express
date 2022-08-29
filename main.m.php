@@ -6,20 +6,22 @@
 */
 return new class
 {
-    public function showError($show=true){
-        if(!$show) {
+    public function showError($show = true)
+    {
+        if (!$show) {
             error_reporting(0);
         } else {
             error_reporting();
         }
     }
-   public function origin($url = ['*']) {
-        if($url[0] == '*') {
+    public function origin($url = ['*'])
+    {
+        if ($url[0] == '*') {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Headers: *");
-        } elseif(isset($_SERVER['HTTP_ORIGIN'])) {
+        } elseif (isset($_SERVER['HTTP_ORIGIN'])) {
             $http_origin = $_SERVER['HTTP_ORIGIN'];
-            if(in_array($http_origin, $url)) {
+            if (in_array($http_origin, $url)) {
                 header("Access-Control-Allow-Origin: $http_origin");
                 header("Access-Control-Allow-Headers: *");
             }
@@ -110,6 +112,10 @@ return new class
     {  // to return class obj
         return new class
         {
+            function header()
+            {
+                return apache_request_headers();
+            }
             function body()
             { // get value from body
                 return file_get_contents('php://input');
@@ -135,10 +141,10 @@ return new class
                     }
                 }
                 $params = explode('/', substr($real_path, 1));
-                if($position > -1) {
+                if ($position > -1) {
                     return str_replace('%20', ' ', $params[$position]);
                 } else {
-                    return str_replace('%20', ' ', $params[sizeof($params) -1]);
+                    return str_replace('%20', ' ', $params[sizeof($params) - 1]);
                 }
             }
         }; // obj end
@@ -149,8 +155,12 @@ return new class
     {
         return new class
         { // return obj
+            function set($field, $value){
+                header("{$field}: {$value}");
+            }
             function send($value)
             {
+                header('Content-Type: text/html;charset=UTF-8');
                 echo $value;
             }
             function status($status)
@@ -159,6 +169,7 @@ return new class
             }
             function json($value)
             {
+                header('Content-Type: application/json;charset=UTF-8');
                 echo json_encode($value);
             }
         }; // obj end
