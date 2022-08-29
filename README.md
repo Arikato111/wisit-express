@@ -37,8 +37,12 @@
 ---
 ### การ require เข้ามาใช้งาน
 - ในเวอร์ชั่นนี้จะใช้การ `require` แบบธรรมดาๆ
-	```
+	```php
 	require('modules/wisit-express/main.m.php');
+	```
+- หากใช้ `use-import` library
+	```php
+	import('wisit-express');
 	```
 ---
 ### ตั้งค่าแสดงข้อผิดพลาด
@@ -80,21 +84,40 @@ Wexpress::get('/', function() {
 
 - และใน method ประเภทอื่นๆ ก็จะเขียนแบบเดียวกัน
 
+- หากต้องการ **custom** method สามารถใช้ `Route` ได้
+```php
+Wexpress::Route('POST', '/', function() {
+    $about  = [
+		'name'=>'Nawasan',
+		'age'=>20
+	];
+    Res::json($about);
+});
+```
+
+
 ---
 
 ### Request
-- สำหรับตัว `Req` ที่ใช้ใน Callback function นั้น ตัว `Req` จะมี type เป็น class ที่มี function ด้านใน 3 function คือ
+- สำหรับตัว `Req` ที่ใช้ใน Callback function นั้น ตัว `Req` จะมี type เป็น class ที่มี function ด้านใน 4 function คือ
+
+	- `Res::header()` จะเป็นตัวรับค่า headers ที่ส่งมา
+
 	- `Req::body()` จะเป็นตัวรับค่า value ที่ส่งมาผ่าน body ซึ่งจะ return เป็นข้อมูลที่ส่งมา
 	
 	- `Req::query()` จะเป็นตัวดึงค่า url parameter และ return เป็น array ซึ่งสามารถสร้างตัวแปรปกติมารับค่าได้ แต่หากต้องการรับค่าแค่บางค่าเท่านั้น ก็สามารถเขียนแบบนี้ได้ 
-	 `['name' => $name] =  Req::query();`
+    	- `['name' => $name] =  Req::query();`
 	 ตัว `name` คือชื่อตัวแปรที่ต้องการรับ และ `$name` คือตัวแปรที่มารับค่า
 	- `Req::params()` คือการดึงค่า path ตำแหน่งสุดท้าย เช่น `/about/name` ตำแหน่งสุดท้ายก็คือ name ก็จะได้ name มา
 	หรือหากต้องการระบุตำแหน่งก็สามารถใส่ตำแหน่งลงไปได้ โดยเริ่มนับตำแหน่งแรกเป็นตำแหน่งที่ 0
 	---
 
 ### Response
-- สำหรับตัว `Res` ที่ใช้ใน Callback function นั้น ตัว `Res` จะมี type เป็น Class ที่มี function ด้านใน 3 function คือ
+- สำหรับตัว `Res` ที่ใช้ใน Callback function นั้น ตัว `Res` จะมี type เป็น Class ที่มี function ด้านใน 4 function คือ
+
+	- `Res::set($field, $value)` เป็นตัวที่จะส่งค่าผ่าน header โดย $field เป็นเหมือนการตั้งชื่อ key ส่วน $value ก็คือค่าที่ต้องการใส่เข้าไป เช่น
+	- - `$res->set('day', 'Mon')`
+
 	- `Res::send()` คือการส่ง response ออกไปในรูปแบบ string โดยใส่ string ธรรมดาลงไปใน function
 	
 	- `Res::status()` คือการส่งรหัสสถานะต่างๆ เช่น 404 , 200 ซึ่งจะใส่ตัวเลขรหัดลงใน function
@@ -111,6 +134,13 @@ $express->origin([
 ---
 
 ### ติดตั้ง
+
+- วิธีที่ 0 ใช้ control ในการติดตั้ง โดยหลังจากทำการลง [control](https://github.com/Arikato111/control) เรียบร้อยให้ใช้คำสั่งด้านล่าง
+
+```
+php control install wisit-express type
+```
+
 -   วิธีที่ 1  **ติดตั้งผ่านคำสั่ง php**  , โดยคัดลอกโค้ดด้านล่างไปวางไว้ที่ installer.php แล้วเข้าหน้า installer.php ผ่านเบราว์เซอร์ รอสักครู่ เป็นอันเสร็จสิ้น
 ```php
 <?php

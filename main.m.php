@@ -97,16 +97,16 @@ class Wexpress
         }
     }
 
-     // method [  ALL ] to get user request
-     public static function all(string $path, callable $callback): void
-     {
-         $value = Wexpress::Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
-         if ($value) {
-             echo $value(Wexpress::request(), Wexpress::response());
-             exit;
-         }
-     }
- 
+    // method [  ALL ] to get user request
+    public static function all(string $path, callable $callback): void
+    {
+        $value = Wexpress::Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
+        if ($value) {
+            echo $value(Wexpress::request(), Wexpress::response());
+            exit;
+        }
+    }
+
 
     // use for input to method function
     // response to return class obj to use function inside
@@ -114,6 +114,10 @@ class Wexpress
     {  // to return class obj
         return new class
         {
+            public static function header(): false | array
+            {
+                return apache_request_headers();
+            }
             public static function body(): string
             { // get value from body
                 return file_get_contents('php://input');
@@ -155,6 +159,7 @@ class Wexpress
         { // return obj
             public static function send(string $value): void
             {
+                header('Content-Type: text/html;charset=UTF-8');
                 echo $value;
             }
             public static function status(int $status): void
@@ -163,6 +168,7 @@ class Wexpress
             }
             public static function json(object | array $value): void
             {
+                header('Content-Type: application/json;charset=UTF-8');
                 echo json_encode($value);
             }
         }; // obj end
@@ -172,6 +178,10 @@ class Wexpress
 
 class Req
 {
+    public static function header(): false | array
+    {
+        return apache_request_headers();
+    }
     public static function body(): string
     { // get value from body
         return file_get_contents('php://input');
@@ -207,8 +217,13 @@ class Req
 
 class Res
 { // return obj
+    public static function set(string $field, string $value): void
+    {
+        header("{$field}: {$value}");
+    }
     public static function send(string $value): void
     {
+        header('Content-Type: text/html;charset=UTF-8');
         echo $value;
     }
     public static function status(int $status): void
@@ -217,6 +232,7 @@ class Res
     }
     public static function json(object | array $value): void
     {
+        header('Content-Type: application/json;charset=UTF-8');
         echo json_encode($value);
     }
 }
