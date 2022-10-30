@@ -43,68 +43,49 @@ class Wexpress
         return $real_path;
     }
     // Route to check METHOD type , Path, and return callback function
-    public static function Route(string $method, string $path, callable $callback): null | callable
+    public static function Route(string $method, string $path, callable $callback): void
     {
-        if ("$_SERVER[REQUEST_METHOD]" != $method) return null; // check method
+        if ("$_SERVER[REQUEST_METHOD]" != $method) return; // check method
 
-        if ($path == '*') return $callback; // check path universel
-        // convert to array
-        $get_path = explode('/', $path);
-        $get_route = explode('/', Wexpress::getPath());
+        if ($path != '*') {
+            $get_path = explode('/', $path);
+            $get_route = explode('/', Wexpress::getPath());
 
-        if (sizeof($get_path) != sizeof($get_route)) return null; // check array size
-        for ($i = 0; $i < sizeof($get_route); $i++) {
-            // compare and check ':'
-            if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return null;
+            if (sizeof($get_path) != sizeof($get_route)) return; // check array size
+            for ($i = 0; $i < sizeof($get_route); $i++) {
+                // compare and check ':'
+                if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return;
+            }
         }
-        return $callback;
+        echo $callback(Wexpress::request(), Wexpress::response());
+        exit;
     }
 
     // method [  GET ] to get user request
     public static function get(string $path, callable $callback): void
     {
-        $value = Wexpress::Route('GET', $path, $callback);
-        if ($value) {
-            echo $value(Wexpress::request(), Wexpress::response());
-            exit;
-        }
+        Wexpress::Route('GET', $path, $callback);
     }
     // method [  POST ] to get user request
     public static function post(string $path, callable $callback): void
     {
-        $value = Wexpress::Route('POST', $path, $callback);
-        if ($value) {
-            echo $value(Wexpress::request(), Wexpress::response());
-            exit;
-        }
+        Wexpress::Route('POST', $path, $callback);
     }
     // method [  PUT ] to get user request
     public static function put(string $path, callable $callback): void
     {
-        $value = Wexpress::Route('PUT', $path, $callback);
-        if ($value) {
-            echo $value(Wexpress::request(), Wexpress::response());
-            exit;
-        }
+        Wexpress::Route('PUT', $path, $callback);
     }
     // method [  DELETE ] to get user request
     public static function delete(string $path, callable $callback): void
     {
-        $value = Wexpress::Route('DELETE', $path, $callback);
-        if ($value) {
-            echo $value(Wexpress::request(), Wexpress::response());
-            exit;
-        }
+        Wexpress::Route('DELETE', $path, $callback);
     }
 
     // method [  ALL ] to get user request
     public static function all(string $path, callable $callback): void
     {
-        $value = Wexpress::Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
-        if ($value) {
-            echo $value(Wexpress::request(), Wexpress::response());
-            exit;
-        }
+        Wexpress::Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
     }
 
 
