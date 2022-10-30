@@ -57,53 +57,34 @@ return new class
             // compare and check ':'
             if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return;
         }
-        return $callback;
+        echo $callback($this->request(), $this->response());
+        exit;
     }
 
     // method [  GET ] to get user request
     public function get($path, $callback)
     {
-        $value = $this->Route('GET', $path, $callback);
-        if ($value) {
-            echo $value($this->request(), $this->response());
-            exit;
-        }
+        $this->Route('GET', $path, $callback);
     }
     // method [  POST ] to get user request
     public function post($path, $callback)
     {
-        $value = $this->Route('POST', $path, $callback);
-        if ($value) {
-            echo $value($this->request(), $this->response());
-            exit;
-        }
+        $this->Route('POST', $path, $callback);
     }
     // method [  PUT ] to get user request
     public function put($path, $callback)
     {
-        $value = $this->Route('PUT', $path, $callback);
-        if ($value) {
-            echo $value($this->request(), $this->response());
-            exit;
-        }
+        $this->Route('PUT', $path, $callback);
     }
     // method [  DELETE ] to get user request
     public function delete($path, $callback)
     {
-        $value = $this->Route('DELETE', $path, $callback);
-        if ($value) {
-            echo $value($this->request(), $this->response());
-            exit;
-        }
+        $this->Route('DELETE', $path, $callback);
     }
     // method [  ALL ] to get user request
     public function all($path, $callback)
     {
-        $value = $this->Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
-        if ($value) {
-            echo $value($this->request(), $this->response());
-            exit;
-        }
+        $this->Route("$_SERVER[REQUEST_METHOD]", $path, $callback);
     }
 
     // use for input to method function
@@ -155,7 +136,8 @@ return new class
     {
         return new class
         { // return obj
-            function set($field, $value){
+            function set($field, $value)
+            {
                 header("{$field}: {$value}");
             }
             function send($value)
@@ -175,3 +157,4 @@ return new class
         }; // obj end
     }
 };
+
