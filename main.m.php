@@ -47,15 +47,16 @@ return new class
     {
         if ("$_SERVER[REQUEST_METHOD]" != $method) return; // check method
 
-        if ($path == '*') return $callback; // check path universel
-        // convert to array
-        $get_path = explode('/', $path);
-        $get_route = explode('/', $this->getPath());
+        if ($path != '*') {
 
-        if (sizeof($get_path) != sizeof($get_route)) return; // check array size
-        for ($i = 0; $i < sizeof($get_route); $i++) {
-            // compare and check ':'
-            if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return;
+            $get_path = explode('/', $path);
+            $get_route = explode('/', $this->getPath());
+
+            if (sizeof($get_path) != sizeof($get_route)) return; // check array size
+            for ($i = 0; $i < sizeof($get_route); $i++) {
+                // compare and check ':'
+                if ($get_path[$i] != $get_route[$i] && $get_path[$i] != ':') return;
+            }        // convert to array
         }
         echo $callback($this->request(), $this->response());
         exit;
