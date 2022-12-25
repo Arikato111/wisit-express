@@ -138,7 +138,7 @@ $express->origin([
 - วิธีที่ 0 ใช้ control ในการติดตั้ง โดยหลังจากทำการลง [control](https://github.com/Arikato111/control) เรียบร้อยให้ใช้คำสั่งด้านล่าง
 
 ```
-php control install wisit-express type
+php control install wisit-express@type
 ```
 
 -   วิธีที่ 1  **ติดตั้งผ่านคำสั่ง php**  , โดยคัดลอกโค้ดด้านล่างไปวางไว้ที่ installer.php แล้วเข้าหน้า installer.php ผ่านเบราว์เซอร์ รอสักครู่ เป็นอันเสร็จสิ้น
